@@ -1,6 +1,6 @@
 <template>
     <div>
-        <task v-for="( task, index ) in list" :key="index" :task="task" v-on:statusChanged="changed($event)"/>
+        <task v-for="( task, index ) in list" :key="index" :task="task" @statusChanged="changed($event)"/>
     </div>
 </template>
 <script>

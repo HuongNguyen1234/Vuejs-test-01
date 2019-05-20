@@ -2,7 +2,7 @@
   <div id="app">
    <h1>What do you want ?</h1>
 
-        <task-list :list="showList" v-on:changed="changeStatus($event)"/>
+        <task-list :list="showList" @changed="changeStatus($event)"/>
         
         <button @click="changeShowType('all')">All</button>
         <button @click="changeShowType('active')">Active</button>
@@ -50,35 +50,27 @@ export default {
         return this.taskList
       }
       if (this.showType == 'active') {
-        let activeList=[];
-        for (let index = 0; index < this.taskList.length; index++) {
-          if(this.taskList[index].completed==false){
-              activeList.push(this.taskList[index]);
-          }
-          
-        }
+        let activeList=this.taskList.filter(task => task.completed==false);
+        
         return activeList
       }
       
       if(this.showType=='completed'){
-        let completedList=[];
-        for (let index = 0; index < this.taskList.length; index++) {
-          if(this.taskList[index].completed==true){
-              completedList.push(this.taskList[index]);
-          }
-          
-        }
+        let completedList=this.taskList.filter(task => task.completed==true);
+     
         return completedList
       }
        if(this.showType=='clear'){
-          let clearList=[];
+          
         for (let index = 0; index < this.taskList.length; index++) {
           if(this.taskList[index].completed==true){
-              clearList.shift();
+              this.taskList.splice(index,1);
+
           }
           
         }
-        return clearList
+        
+        return this.taskList;
         }
       return[];
     }
